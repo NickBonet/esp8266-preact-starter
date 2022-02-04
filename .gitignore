@@ -1,6 +1,6 @@
 .pio
 .vscode
-data
+data/www
 preact-ui/node_modules
 preact-ui/build
 preact-ui/*.log
