@@ -8,9 +8,21 @@
  * @param {Record<string, unknown>} options - this is mainly relevant for plugins (will always be empty in the config), default to an empty object
  */
 export default (config, env, helpers, options) => {
-    if (env.isProd) {
-      config.devtool = false; // disable sourcemaps
-    }
+  if (env.isProd) {
+    config.devtool = false; // disable sourcemaps
 
-    config.output.chunkFilename = '[name].[chunkhash:5].js'
+    // Shorten JavaScript file names
+    config.output.filename = "js/[id].[chunkhash:4].js";
+    config.output.chunkFilename = "js/[id].[chunkhash:4].js";
+
+    // Shorten CSS file names
+    const MiniCssExtractPlugin = helpers.getPluginsByName(
+      config,
+      "MiniCssExtractPlugin"
+    )[0];
+
+    MiniCssExtractPlugin.plugin.options.filename = "css/[id].[chunkhash:4].css";
+    MiniCssExtractPlugin.plugin.options.chunkFilename =
+      "css/[id].[chunkhash:4].css";
+  }
 };
