@@ -5,3 +5,4 @@ preact-ui/node_modules
 preact-ui/build
 preact-ui/*.log
 preact-ui/size-plugin.json
+scripts/__pycache__

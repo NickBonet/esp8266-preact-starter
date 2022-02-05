@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "cross-env NODE_ENV=production preact build --no-prerender --no-prerenderUrls --no-sw --no-esm --dest=../data/www",
+    "postbuild": "python ../scripts/gzip_ui_files.py",
     "serve": "sirv build --port 8080 --cors --single",
     "dev": "preact watch",
     "lint": "eslint src",
