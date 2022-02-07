@@ -1,14 +1,17 @@
 #include <Arduino.h>
+#include <ESPAsyncWebServer.h>
 #include "LittleFS.h"
 #include "credentials.hpp"
+
 #ifdef ESP32
 #include <WiFi.h>
 #include <AsyncTCP.h>
+#include <ESPmDNS.h>
 #elif defined(ESP8266)
 #include <ESP8266WiFi.h>
 #include <ESPAsyncTCP.h>
+#include <ESP8266mDNS.h>
 #endif
-#include <ESPAsyncWebServer.h>
 
 AsyncWebServer server(9080);
 
@@ -36,23 +39,27 @@ void setup()
     WiFi.begin(ssid, password);
     if (WiFi.waitForConnectResult() != WL_CONNECTED)
     {
-        Serial.printf("WiFi connection failed!\n");
+        Serial.println("WiFi connection failed!");
         return;
     }
 
     Serial.print("IP Address: ");
     Serial.println(WiFi.localIP());
 
-    server.serveStatic("/", LittleFS, "/www/");
+    if (!MDNS.begin("esp8266"))
+    {
+        Serial.println("Error setting up mDNS responder.");
+    }
 
+    server.onNotFound(notFound);
+    server.serveStatic("/", LittleFS, "/www/");
     server.on("*", HTTP_GET, [](AsyncWebServerRequest *request)
               { request->send(LittleFS, "/www/index.html"); });
 
-    server.onNotFound(notFound);
     server.begin();
 }
 
 void loop()
 {
-    // put your main code here, to run repeatedly:
+    MDNS.update();
 }
