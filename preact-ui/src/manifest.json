@@ -1,6 +1,6 @@
 {
-  "name": "preact-ui",
-  "short_name": "preact-ui",
+  "name": "ESP8266 Preact UI",
+  "short_name": "esp8266-preact",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
