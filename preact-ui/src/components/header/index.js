@@ -9,11 +9,8 @@ const Header = () => (
       <Link activeClassName={style.active} href="/">
         Home
       </Link>
-      <Link activeClassName={style.active} href="/profile">
-        Me
-      </Link>
-      <Link activeClassName={style.active} href="/profile/john">
-        John
+      <Link activeClassName={style.active} href="/update">
+        OTA Update
       </Link>
     </nav>
   </header>
